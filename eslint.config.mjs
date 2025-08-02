@@ -10,7 +10,16 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // Default Next.js + TS rules
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // Disable rule only for config files
+  {
+    files: ["**/*.config.{js,cjs,mjs,ts}"],
+    rules: {
+      "import/no-anonymous-default-export": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
