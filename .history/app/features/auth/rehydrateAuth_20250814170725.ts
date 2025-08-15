@@ -1,0 +1,30 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { setAuth, setInitialized } from '../authSlice';
+
+const API_URL = process.env.NEXT_PUBLIC_HOST || 'http://127.0.0.1:8000';
+
+export const rehydrateAuth = createAsyncThunk(
+  'auth/rehydrate',
+  async (_, { dispatch }) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      try {
+        // Save token in Redux
+        dispatch(setAuth({ token }));
+
+        // Fetch current user
+        const userResponse = await axios.get(`${API_URL}/auth/users/me/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+
+        dispatch(setAuth({ token, user: userResponse.data }));
+      } catch (error) {
+        console.error('Token invalid, clearing localStorage', error);
+        localStorage.removeItem('authToken');
+      }
+    }
+
+    dispatch(setInitialized()); // mark app ready
+  }
+);
