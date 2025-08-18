@@ -43,9 +43,9 @@ const NavItems = ({ mobile }: Props) => {
             <Link href="/auth/login" className="nav-btn">
               Login
             </Link>
-            <Link href="/auth/register" className="nav-btn">
+            {/* <Link href="/auth/register" className="nav-btn">
               Signup
-            </Link>
+            </Link> */}
           </>
         )}
 
