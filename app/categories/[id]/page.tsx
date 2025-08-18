@@ -4,7 +4,7 @@ import ProductCard from "@/components/home/ProductCard";
 const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
 interface CategoryPageProps {
-  params: { slug: string };
+  params: { id: string };
    searchParams?: { [key: string]: string | string[] | undefined }; 
 }
 
@@ -13,7 +13,7 @@ function deslugify(slug: string) {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const categoryTitle = deslugify(params.slug);
+  const categoryTitle = deslugify(params.id);
 
 
   const res = await fetch(
