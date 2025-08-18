@@ -1,8 +1,10 @@
-"use client";
+'use client';
 import { ReactNode, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import type { RootState } from '@/redux/store';
+import { isAdminUser } from '../utils/authHelpers';
+
 
 interface AdminRouteProps {
   children: ReactNode;
@@ -13,7 +15,7 @@ export default function AdminRoute({ children }: AdminRouteProps) {
   const { user, initialized } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    if (initialized && (!user || !user.isAdmin)) {
+    if (initialized && !isAdminUser(user)) {
       console.log('AdminRoute -> redirecting to / because not admin');
       router.push('/');
     }

@@ -3,15 +3,16 @@ import ProductCard from "@/components/home/ProductCard";
 
 const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
-interface Props {
+interface CategoryPageProps {
   params: { slug: string };
+   searchParams?: { [key: string]: string | string[] | undefined }; 
 }
 
 function deslugify(slug: string) {
   return slug.replace(/-/g, " "); 
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoryTitle = deslugify(params.slug);
 
 

@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
     const user = await res.json();
     return NextResponse.json(user);
-  } catch (err) {
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
-  }
+  } catch {
+  return new Response("Error", { status: 500 });
+}
 }

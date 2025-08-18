@@ -65,17 +65,15 @@ const NavItems = ({ mobile }: Props) => {
           </Link>
 
           {/* Admin link (only if user is admin) */}
-          {user?.isAdmin && (
+          {(user?.is_staff || user?.is_superuser) && (
             <Link
               href="/admin"
-              className={cn(
-                "nav-btn",
-                mobile ? "w-full text-center" : ""
-              )}
+              className={cn("", mobile ? "w-full text-center" : "")}
             >
               Admin
             </Link>
           )}
+
 
           {/* Logout button */}
           <button

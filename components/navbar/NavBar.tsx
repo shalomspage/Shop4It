@@ -23,7 +23,7 @@ const NavBar = () => {
             <h1 className="text-2xl font-extrabold text-gray-900">Shop4It</h1>
           </Link>
 
-          <div className="max-md:hidden flex items-center gap-8">
+          <div className="max-lg:hidden flex items-center gap-8">
             <MainNav />
             
           </div>

@@ -25,12 +25,12 @@ const MobileNavbar = () => {
         </SheetHeader>
 
         {/* Primary nav links */}
-        <div className="flex flex-col gap-4 mt-6 text-lg font-medium">
+        <div className="flex flex-col gap-4 mt-6 text-lg font-medium items-center">
           <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>
           <Link href="/shop" className="hover:text-primary transition-colors">
-            Shop
+            Products
           </Link>
           <Link href="/contact" className="hover:text-primary transition-colors">
             Contact
