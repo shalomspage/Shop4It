@@ -5,26 +5,28 @@ import ReviewForm from "@/components/productDetail/ReviewForm";
 import ProductSection from "@/components/home/ProductSection";
 import Modal from "@/components/uiComponentes/Modal";
 import { Star } from "lucide-react";
-import { DynamicPageProps } from "@/app/types";
+import { Product } from "@/app/types";
 
-// Fetch product helper
-const getProduct = async (id: string) => {
+interface ProductPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+const getProduct = async (slug: string): Promise<Product | null> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/products/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/products/${slug}`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error("Product not found");
     return res.json();
-  } catch (error) {
-    console.error("Error fetching product:", error);
+  } catch {
     return null;
   }
 };
 
-type ProductPageProps = DynamicPageProps<{ slug: string }>;
-
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = params;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+
   const product = await getProduct(slug);
 
   if (!product) {
@@ -38,12 +40,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <>
       <ProductInfo product={product} />
-
-      <div className="main-max-width padding-x mx-auto ">
+      <div className="main-max-width padding-x mx-auto">
         <h3 className="font-semibold text-xl text-center my-6 text-gray-800">
           Customer Reviews
         </h3>
-
         <div className="w-full flex py-6 gap-6 flex-wrap items-center justify-between max-md:justify-center">
           <div className="w-[250px] h-[250px] bg-gray-100 rounded-lg px-4 py-6 flex flex-col gap-3 items-center justify-center shadow-lg">
             <h1 className="text-5xl font-bold text-gray-800">5.0</h1>

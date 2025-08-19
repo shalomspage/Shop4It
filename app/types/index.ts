@@ -5,21 +5,24 @@ export interface Category {
 }
 
 export type Product = {
-  id: number;
+  id: string;                  
   title: string;
   price: number;
   imageUrl: string[];
   description: string;
   ratings: number;
+  clothesType: string;
+  colors: string[];            
+  sizes: string[];             
   in_stock: boolean;
   is_featured: boolean;
-  clothesType: string;
   slug: string;
   category: number | string;
 };
 
 
+
 export type DynamicPageProps<T extends Record<string, string>> = {
-  params: T;
+  params: T | Promise<T>; // Can be a resolved object or a Promise
   searchParams?: Record<string, string | string[] | undefined>;
 };

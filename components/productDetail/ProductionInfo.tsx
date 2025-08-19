@@ -7,19 +7,10 @@ import clsx from "clsx";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/app/features/cartSlice";
 import AddToWishlistButton from "../cart/addToWishlist";
+import { Product } from "@/app/types";
 
 interface ProductProps {
-  product: {
-    id: string;
-    title: string;
-    description: string;
-    imageUrl: string[];
-    price: number;
-    clothesType: string;
-    ratings: number;
-    colors: string[];
-    sizes: string[];
-  };
+  product: Product
 }
 
 
