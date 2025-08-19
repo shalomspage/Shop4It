@@ -8,30 +8,30 @@ function deslugify(slug: string) {
 }
 
 interface CategoryPageProps {
-  params: { id: string }; 
+  params: { id: string };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { id } = params;
-  const categoryTitle = deslugify(id);
+  
+  if (!id || typeof id !== 'string') {
+    throw new Error('Invalid category ID');
+  }
 
+  const categoryTitle = deslugify(id);
   const res = await fetch(
     `${API_URL}/api/products/?category=${encodeURIComponent(categoryTitle)}`,
     { cache: "no-store" }
   );
-
   if (!res.ok) {
     throw new Error("Failed to fetch products");
   }
-
   const products: Product[] = await res.json();
-
   return (
     <div className="main-max-width mx-auto padding-x py-9 min-h-screen">
       <p className="font-semibold text-center text-xl capitalize">
         {categoryTitle}
       </p>
-
       <div className="flex-center flex-wrap my-6 gap-4">
         {products.length > 0 ? (
           products.map((product) => (
