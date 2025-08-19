@@ -8,11 +8,11 @@ function deslugify(slug: string) {
 }
 
 interface CategoryPageProps {
-  params: { id: string }; 
+  params: { id: string }; // <-- NOT a Promise
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = params; // <-- no await
+  const { id } = params; // no await needed
   const categoryTitle = deslugify(id);
 
   const res = await fetch(
@@ -20,17 +20,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     { cache: "no-store" }
   );
 
-  if (!res.ok) throw new Error("Failed to fetch products");
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
 
   const products: Product[] = await res.json();
 
   return (
     <div className="main-max-width mx-auto padding-x py-9 min-h-screen">
-      <p className="font-semibold text-center text-xl capitalize">{categoryTitle}</p>
+      <p className="font-semibold text-center text-xl capitalize">
+        {categoryTitle}
+      </p>
 
       <div className="flex-center flex-wrap my-6 gap-4">
         {products.length > 0 ? (
-          products.map((product) => <ProductCard key={product.id} product={product} />)
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
         ) : (
           <p className="text-gray-500">No products found in this category.</p>
         )}
