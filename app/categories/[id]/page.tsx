@@ -11,7 +11,7 @@ function deslugify(slug: string) {
 type CategoryPageProps = DynamicPageProps<{ id: string }>;
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = params; 
+  const { id } = params;
   const categoryTitle = deslugify(id);
 
   const res = await fetch(
@@ -28,9 +28,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <p className="font-semibold text-center text-xl capitalize">{categoryTitle}</p>
 
       <div className="flex-center flex-wrap my-6 gap-4">
-        {products.length > 0
-          ? products.map((product) => <ProductCard key={product.id} product={product} />)
-          : <p className="text-gray-500">No products found in this category.</p>}
+        {products.length > 0 ? (
+          products.map((product) => <ProductCard key={product.id} product={product} />)
+        ) : (
+          <p className="text-gray-500">No products found in this category.</p>
+        )}
       </div>
     </div>
   );
