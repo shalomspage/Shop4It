@@ -20,7 +20,7 @@ const MobileNavbar = () => {
       <SheetContent side="left" className="flex flex-col gap-6">
         <SheetHeader>
           <SheetTitle className="text-center font-bold text-xl">
-            Shoppit
+            Shop4It
           </SheetTitle>
         </SheetHeader>
 
