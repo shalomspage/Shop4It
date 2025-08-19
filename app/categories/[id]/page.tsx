@@ -3,19 +3,18 @@ import ProductCard from "@/components/home/ProductCard";
 
 const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
-// Next.js Page props type for dynamic routes
+
 interface CategoryPageProps {
-  params: Promise<{ id: string }>; // matches [id] folder
+  params: { id: string }; 
   searchParams?: Record<string, string | string[] | undefined>;
 }
 
 function deslugify(slug: string) {
-  return slug.replace(/-/g, " "); 
+  return slug.replace(/-/g, " ");
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
- 
- const { id } = await params;
+  const { id } = params; 
   const categoryTitle = deslugify(id);
 
   const res = await fetch(
