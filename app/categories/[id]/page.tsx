@@ -1,6 +1,5 @@
 import { Product } from "@/app/types";
 import ProductCard from "@/components/home/ProductCard";
-import { DynamicPageProps } from "@/app/types";
 
 const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
@@ -8,12 +7,17 @@ function deslugify(slug: string) {
   return slug.replace(/-/g, " ");
 }
 
-type CategoryPageProps = DynamicPageProps<{ id: string }>;
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+type CategoryPageProps = {
+  params: { id: string };
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { id } = params;
   const categoryTitle = deslugify(id);
 
+  // Fetch products for this category
   const res = await fetch(
     `${API_URL}/api/products/?category=${encodeURIComponent(categoryTitle)}`,
     { cache: "no-store" }
@@ -34,6 +38,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <p className="text-gray-500">No products found in this category.</p>
         )}
       </div>
+
+      {searchParams && (
+        <div className="mt-6">
+          <h2 className="font-semibold">Search Parameters:</h2>
+          <pre>{JSON.stringify(searchParams, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
