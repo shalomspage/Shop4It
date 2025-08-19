@@ -8,16 +8,11 @@ function deslugify(slug: string) {
 }
 
 interface CategoryPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = params;
-  
-  if (!id || typeof id !== 'string') {
-    throw new Error('Invalid category ID');
-  }
-
+  const { id } = await params;
   const categoryTitle = deslugify(id);
   const res = await fetch(
     `${API_URL}/api/products/?category=${encodeURIComponent(categoryTitle)}`,
