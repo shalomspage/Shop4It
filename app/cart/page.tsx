@@ -1,25 +1,15 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart, updateQuantity } from "@/app/features/cartSlice";
 import { RootState } from "@/redux/store";
 import CheckoutButton from "@/components/CheckoutButton";
-// import { useRouter } from "next/navigation";
-// import { useEffect } from "react";
 
 export default function CartPage() {
   const { items } = useSelector((state: RootState) => state.cart);
-  const {  initialized } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  // const router = useRouter();
-
-  // Redirect if not logged in
-  // useEffect(() => {
-  //   if (initialized && !isAuthenticated) {
-  //     router.push("/auth/login");
-  //   }
-  // }, [isAuthenticated, initialized, router]);
 
   const handleQuantityChange = (id: string, quantity: number) => {
     if (quantity > 0) {
@@ -28,10 +18,6 @@ export default function CartPage() {
   };
 
   const grandTotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  if (!initialized) {
-    return <p className="max-w-4xl mx-auto p-6">Loading...</p>;
-  }
 
   if (items.length === 0) {
     return <p className="min-h-screen max-w-4xl mx-auto p-6">Your cart is empty.</p>;
