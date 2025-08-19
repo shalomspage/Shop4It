@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -12,8 +13,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
 
 const MobileNavbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(false);
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <RxHamburgerMenu className="text-3xl cursor-pointer" />
       </SheetTrigger>
@@ -26,19 +31,31 @@ const MobileNavbar = () => {
 
         {/* Primary nav links */}
         <div className="flex flex-col gap-4 mt-6 text-lg font-medium items-center">
-          <Link href="/" className="hover:text-primary transition-colors">
+          <Link
+            href="/"
+            onClick={handleClose}
+            className="hover:text-primary transition-colors"
+          >
             Home
           </Link>
-          <Link href="/products" className="hover:text-primary transition-colors">
+          <Link
+            href="/products"
+            onClick={handleClose}
+            className="hover:text-primary transition-colors"
+          >
             Products
           </Link>
-          <Link href="/contact" className="hover:text-primary transition-colors">
+          <Link
+            href="/contact"
+            onClick={handleClose}
+            className="hover:text-primary transition-colors"
+          >
             Contact
           </Link>
         </div>
 
         {/* Auth / Cart / Profile (from NavItems) */}
-        <div className="mt-8">
+        <div className="mt-8" onClick={handleClose}>
           <NavItems mobile />
         </div>
       </SheetContent>
