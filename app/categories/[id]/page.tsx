@@ -7,11 +7,11 @@ function deslugify(slug: string) {
   return slug.replace(/-/g, " ");
 }
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface CategoryPageProps {
+  params: { id: string }; 
+}
+
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const { id } = params;
   const categoryTitle = deslugify(id);
 
