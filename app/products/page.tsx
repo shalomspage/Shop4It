@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { Product } from "@/app/types";
 import ProductCard from "@/components/home/ProductCard";
+import Spinner from "@/components/common/Spinner";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -29,12 +30,12 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 py-8">
-      {/* <h1 className="text-3xl font-bold mb-6">Shop</h1> */}
-
       {loading ? (
-        <p className="text-center py-10">Loading products...</p>
+        <div className="flex justify-center items-center py-20">
+          <Spinner lg /> 
+        </div>
       ) : products.length === 0 ? (
-        <p className="text-center py-10">No products found.</p>
+        <p className="text-center py-10 text-gray-500">No products found.</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
           {products.map((product) => (

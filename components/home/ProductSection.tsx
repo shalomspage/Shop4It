@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import ProductCard from "./ProductCard"
 import { Product } from "@/app/types"
 import axios from "axios"
+import Spinner from '../common/Spinner'
 
 interface Props {
   title: string
@@ -12,6 +13,7 @@ interface Props {
 
 const ProductSection: React.FC<Props> = ({ title, endpoint }) => {
   const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,6 +23,8 @@ const ProductSection: React.FC<Props> = ({ title, endpoint }) => {
         setProducts(res.data)
       } catch (error) {
         console.error(`Error fetching products from ${endpoint}:`, error)
+      }finally {
+        setLoading(false)
       }
     }
     fetchProducts()
@@ -32,8 +36,10 @@ const ProductSection: React.FC<Props> = ({ title, endpoint }) => {
         {title}
       </h2>
 
-      <div className="flex-center flex-wrap gap-4">
-        {products.length > 0 ? (
+       <div className="flex justify-center flex-wrap gap-8 min-h-[120px] items-center">
+        {loading ? (
+          <Spinner md />
+        ) : products.length > 0 ? (
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))

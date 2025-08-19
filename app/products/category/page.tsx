@@ -6,10 +6,11 @@ type Category = {
   id: number;
   title: string;
 };
+const API_URL = process.env.NEXT_PUBLIC_HOST || 'http://localhost:8000';
 
 async function fetchCategories(): Promise<Category[]> {
-  const res = await fetch('http://localhost:8000/api/products/categories/', {
-    cache: 'no-store',
+  const res = await fetch(`${API_URL}/api/products/categories/`, {
+    cache: 'no-store', 
   });
 
   if (!res.ok) throw new Error('Failed to fetch categories');
@@ -18,7 +19,7 @@ async function fetchCategories(): Promise<Category[]> {
 }
 
 async function fetchPopularProductsByCategory(categoryId: number): Promise<Product[]> {
-  const res = await fetch(`http://localhost:8000/api/products/popular/?category=${categoryId}`, {
+  const res = await fetch(`${API_URL}/api/products/popular/?category=${categoryId}`, {
     cache: 'no-store',
   });
 
@@ -28,7 +29,7 @@ async function fetchPopularProductsByCategory(categoryId: number): Promise<Produ
 }
 
 async function fetchTopPopularProducts(): Promise<Product[]> {
-  const res = await fetch('http://localhost:8000/api/products/popular/', {
+  const res = await fetch(`${API_URL}/api/products/popular/`, {
     cache: 'no-store',
   });
 

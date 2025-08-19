@@ -4,6 +4,7 @@ import { FormEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/app/features/auth/authThunks';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import Spinner from '@/components/common/Spinner';
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
@@ -27,27 +28,37 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    try {
-      const result = await dispatch(loginUser({ username, password })).unwrap();
-      console.log("Login success:", result);
-      router.push('/'); 
-    } catch (err: unknown) {
-  if (
-    typeof err === "object" &&
-    err !== null &&
-    "detail" in err &&
-    typeof (err).detail === "string"
-  ) {
-    setError((err as { detail: string }).detail);
-  } else {
-    setError("Login failed");
+  try {
+    const result = await dispatch(loginUser({ username, password })).unwrap();
+    console.log("Login success:", result);
+    router.push('/'); 
+  } catch (err: unknown) {
+    interface ErrorWithDetail {
+      detail: string;
+    }
+    if (
+      typeof err === "object" &&
+      err !== null &&
+      "detail" in err &&
+      typeof (err as ErrorWithDetail).detail === "string"
+    ) {
+      setError((err as ErrorWithDetail).detail);
+    } else {
+      setError("Login failed");
+    }
+    console.error("Login error:", err);
+  } finally {
+    setLoading(false);
   }
-}
-  };
+};
 
   if (isAuthenticated) {
     
-    return <p className="min-h-screen text-center mt-20">Redirecting...</p>;
+    return <div className="flex flex-col min-h-screen text-center items-center gap-6 mt-20">
+      <Spinner lg />
+      <p>You are already logged in. Redirecting...</p>
+      
+    </div>;
   }
 
   return (
@@ -62,7 +73,7 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 p-2"
             />
           </div>
 
@@ -73,7 +84,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-300 p-2"
             />
           </div>
 
