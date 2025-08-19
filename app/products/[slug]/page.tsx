@@ -5,19 +5,15 @@ import ReviewForm from "@/components/productDetail/ReviewForm";
 import ProductSection from "@/components/home/ProductSection";
 import Modal from "@/components/uiComponentes/Modal";
 import { Star } from "lucide-react";
-import React from "react";
+import { DynamicPageProps } from "@/app/types";
 
-// Fetch product
+// Fetch product helper
 const getProduct = async (id: string) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/products/${id}`, {
       cache: "no-store",
     });
-
-    if (!res.ok) {
-      throw new Error("Product not found");
-    }
-
+    if (!res.ok) throw new Error("Product not found");
     return res.json();
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -25,14 +21,15 @@ const getProduct = async (id: string) => {
   }
 };
 
-// Page component
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const { slug } = await Promise.resolve(params); 
+type ProductPageProps = DynamicPageProps<{ slug: string }>;
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = params;
   const product = await getProduct(slug);
 
   if (!product) {
     return (
-      <div className=" min-h-screen text-center text-red-500 py-20 text-xl">
+      <div className="min-h-screen text-center text-red-500 py-20 text-xl">
         Product not found
       </div>
     );

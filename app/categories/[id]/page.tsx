@@ -1,5 +1,6 @@
 import { Product } from "@/app/types";
 import ProductCard from "@/components/home/ProductCard";
+import { DynamicPageProps } from "@/app/types";
 
 const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
@@ -7,21 +8,23 @@ function deslugify(slug: string) {
   return slug.replace(/-/g, " ");
 }
 
-interface CategoryPageProps {
-  params: Promise<{ id: string }>;
-}
+type CategoryPageProps = DynamicPageProps<{ id: string }>;
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = await params;
+  const { id } = params;
   const categoryTitle = deslugify(id);
+
   const res = await fetch(
     `${API_URL}/api/products/?category=${encodeURIComponent(categoryTitle)}`,
     { cache: "no-store" }
   );
+
   if (!res.ok) {
     throw new Error("Failed to fetch products");
   }
+
   const products: Product[] = await res.json();
+
   return (
     <div className="main-max-width mx-auto padding-x py-9 min-h-screen">
       <p className="font-semibold text-center text-xl capitalize">
