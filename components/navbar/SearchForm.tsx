@@ -4,14 +4,14 @@ import { Search } from "lucide-react";
 
 const SearchForm = () => {
   return (
-    <Form action="/" scroll={false} className="search-form">
+    <Form action="/" scroll={false} className="search-form mb-2.5">
       <input
         name="query"
         className="flex-1 font-bold w-full outline-none"
         placeholder="Search Products"
       />
 
-      <button className="size-[20px] rounded-full bg-black flex justify-center items-center cursor-pointer text-white">
+      <button className="size-[30px] rounded-full bg-black flex justify-center items-center cursor-pointer text-white">
         <Search className="size-4" />
       </button>
     </Form>

@@ -29,7 +29,7 @@ const MobileNavbar = () => {
           <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>
-          <Link href="/shop" className="hover:text-primary transition-colors">
+          <Link href="/products" className="hover:text-primary transition-colors">
             Products
           </Link>
           <Link href="/contact" className="hover:text-primary transition-colors">
