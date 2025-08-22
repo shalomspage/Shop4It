@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../uiComponentes/Button";
+import Spinner from "../common/Spinner";
 
 interface Product {
   id: string;
@@ -61,7 +62,10 @@ const handleDelete = async (id: string) => {
 
 
   if (loading) {
-    return <p className="min-h-screen max-w-4xl mx-auto p-6">Loading...</p>;
+    return <div className="flex flex-col min-h-screen max-w-2xl gap-8 mx-auto p-6 text-center items-center justify-center">
+    <Spinner lg />
+    <p>Loading product details...</p>
+  </div>;
   }
 
   if (products.length === 0) {

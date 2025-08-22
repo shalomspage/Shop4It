@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ProductFormHeader from "./ProductFormHeader";
+// import ProductFormHeader from "./ProductFormHeader";
 import ProductFormFields from "./ProductFormFields";
 import type { Brand, Category, ProductFormProps, ProductFormState } from "./types";
 
-const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
+const ProductFormContainer: React.FC<ProductFormProps> = ({ productId }) => {
   const router = useRouter();
 
   const [form, setForm] = useState<ProductFormState>({
@@ -28,9 +28,9 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(false);
 
-
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // Fetch categories & brands
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/`)
       .then((r) => r.json())
@@ -43,9 +43,10 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
       .catch(console.error);
   }, []);
 
+  // Fetch product data for editing
   useEffect(() => {
     if (!productId) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/${productId}/`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -88,16 +89,22 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
         ratings: parseFloat(String(form.ratings)),
         category: form.categoryId !== "" ? form.categoryId : null,
         brand_id: form.brandId !== "" ? form.brandId : null,
-        colors: form.colors ? form.colors.split(",").map((c) => c.trim()).filter(Boolean) : [],
-        sizes: form.sizes ? form.sizes.split(",").map((s) => s.trim()).filter(Boolean) : [],
-        imageUrl: form.imageUrl ? form.imageUrl.split(",").map((u) => u.trim()).filter(Boolean) : [],
+        colors: form.colors
+          ? form.colors.split(",").map((c) => c.trim()).filter(Boolean)
+          : [],
+        sizes: form.sizes
+          ? form.sizes.split(",").map((s) => s.trim()).filter(Boolean)
+          : [],
+        imageUrl: form.imageUrl
+          ? form.imageUrl.split(",").map((u) => u.trim()).filter(Boolean)
+          : [],
         created_at: form.createdAt,
       };
 
       const method = productId ? "PUT" : "POST";
       const url = productId
-        ? `${process.env.NEXT_PUBLIC_HOSTS}/products/${productId}/`
-        : `${process.env.NEXT_PUBLIC_HOSTS}/products/`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/${productId}/`
+        : `${process.env.NEXT_PUBLIC_API_URL}`;
 
       const res = await fetch(url, {
         method,
@@ -116,7 +123,7 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
       }
 
       setMessage({ type: "success", text: "✅ Product saved successfully!" });
-      setTimeout(() => router.push("/admin/products"), 1500);
+      setTimeout(() => router.push("/admin"), 1500);
     } catch (err) {
       console.error(err);
       setMessage({ type: "error", text: "❌ Error saving product" });
@@ -140,17 +147,36 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId}) => {
         </div>
       )}
 
-      <ProductFormHeader
+      {/* <ProductFormHeader
         title={productId ? "Edit Product" : "Add New Product"}
         loading={loading}
-        onCancel={handleCancel}
-      />
+        
+      /> */}
+
       <ProductFormFields
         form={form}
         setForm={setFormState}
         categories={categories}
         brands={brands}
       />
+
+      {/* Save & Cancel Buttons */}
+      <div className="flex justify-end gap-4 mt-6">
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="px-4 py-2 rounded bg-gray-300 text-gray-700 hover:bg-gray-400 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="update-item-btn disabled:opacity-50"
+        >
+          {loading ? "Saving..." : "Save"}
+        </button>
+      </div>
     </form>
   );
 };

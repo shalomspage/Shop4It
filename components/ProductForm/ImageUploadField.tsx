@@ -1,5 +1,6 @@
 "use client";
 
+import cloudinaryLoader from "@/lib/cloudinaryLoader";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -49,7 +50,10 @@ const ImageUploadField: React.FC<ImageUploadFieldProps> = ({ value, onChange }) 
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          onChange([...value, result.info.secure_url]);
+          const newUrl = result.info.secure_url;
+          if (!value.includes(newUrl)) {
+            onChange([...value, newUrl]);
+          }
         }
       }
     );
@@ -69,7 +73,7 @@ const ImageUploadField: React.FC<ImageUploadFieldProps> = ({ value, onChange }) 
         onClick={handleUpload}
         disabled={!cloudinaryLoaded}
         className={`default-btn ${
-          cloudinaryLoaded ? "": "bg-gray-400 cursor-not-allowed"
+          cloudinaryLoaded ? "" : "bg-gray-400 cursor-not-allowed"
         }`}
       >
         {cloudinaryLoaded ? "Upload Images" : "Loading..."}
@@ -77,19 +81,17 @@ const ImageUploadField: React.FC<ImageUploadFieldProps> = ({ value, onChange }) 
 
       {/* Images Grid */}
       <div className="mt-4 grid grid-cols-3 gap-2">
-        {value.map((url) => (
-          <div key={url} className="relative group">
+        {value.map((url, index) => (
+          <div key={`${url}-${index}`} className="relative group">
             <Image
-              src={url}
-              alt="Uploaded"
-              className="w-full h-32 object-cover rounded"
-              width={200}
-              height={128}
+              loader={cloudinaryLoader}
+              src={url} 
+              alt={`Uploaded ${index + 1}`}
+              width={500}
+              height={500}
+              className="rounded object-cover h-32 w-full"
             />
-           
-            <div
-              className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
+            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <button
                 type="button"
                 onClick={() => removeImage(url)}

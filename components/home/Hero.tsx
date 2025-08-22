@@ -9,7 +9,7 @@ const Hero = () => {
       <h1 className="text-4xl font-extrabold text-gray-900 leading-snug md:text-5xl">
         Find the Perfect Product for Every Occasion
       </h1>
-      <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+      <p className="text-lg text-green-700 max-w-2xl mx-auto">
         Discover a curated selection of high-quality products designed to fit
         your lifestyle.
       </p>

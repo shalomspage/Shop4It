@@ -20,45 +20,77 @@ const ProductFormFields: React.FC<Props> = ({ form, setForm, categories, brands 
 
   return (
     <>
-      <TextField label="Title" value={form.title} onChange={(v) => setForm((p) => ({ ...p, title: v }))} required />
+      <TextField
+        label="Title"
+        value={form.title}
+        onChange={(v) => setForm((p) => ({ ...p, title: v }))}
+        required
+      />
 
-      <NumberField label="Price" value={form.price} onChange={(v) => setForm((p) => ({ ...p, price: v }))} step="0.01" required />
+      <NumberField
+        label="Price"
+        value={form.price}
+        onChange={(v) => setForm((p) => ({ ...p, price: v }))}
+        step="0.01"
+        required
+      />
 
-      <TextField label="Description" value={form.description} onChange={(v) => setForm((p) => ({ ...p, description: v }))} required multiline rows={5} />
+      <TextField
+        label="Description"
+        value={form.description}
+        onChange={(v) => setForm((p) => ({ ...p, description: v }))}
+        required
+        multiline
+        rows={5}
+      />
 
-      <CheckboxField label="Is Featured" checked={form.isFeatured} onChange={(v) => setForm((p) => ({ ...p, isFeatured: v }))} />
+      <CheckboxField
+        label="Is Featured"
+        checked={form.isFeatured}
+        onChange={(v) => setForm((p) => ({ ...p, isFeatured: v }))}
+      />
 
-      <TextField label="Clothes Type" value={form.clothesType} onChange={(v) => setForm((p) => ({ ...p, clothesType: v }))} required />
+      <TextField
+        label="Clothes Type"
+        value={form.clothesType}
+        onChange={(v) => setForm((p) => ({ ...p, clothesType: v }))}
+        required
+      />
 
-      <NumberField label="Ratings" value={form.ratings} onChange={(v) => setForm((p) => ({ ...p, ratings: v }))} step="0.1" required />
+      <SelectField
+        label="Category"
+        value={form.categoryId}
+        onChange={(v) => setForm((p) => ({ ...p, categoryId: v as number | "" }))}
+        options={catOptions}
+        required
+      />
 
-      <SelectField label="Category" value={form.categoryId} onChange={(v) => setForm((p) => ({ ...p, categoryId: v as number | "" }))} options={catOptions} required />
+      <SelectField
+        label="Brand"
+        value={form.brandId}
+        onChange={(v) => setForm((p) => ({ ...p, brandId: v as number | "" }))}
+        options={brandOptions}
+        placeholder="Select Brand (optional)"
+      />
 
-      <SelectField label="Brand" value={form.brandId} onChange={(v) => setForm((p) => ({ ...p, brandId: v as number | "" }))} options={brandOptions} placeholder="Select Brand (optional)" />
+      <TextField
+        label="Colors (comma-separated)"
+        value={form.colors}
+        onChange={(v) => setForm((p) => ({ ...p, colors: v }))}
+      />
 
-      <TextField label="Colors (comma-separated)" value={form.colors} onChange={(v) => setForm((p) => ({ ...p, colors: v }))} />
+      <TextField
+        label="Sizes (comma-separated)"
+        value={form.sizes}
+        onChange={(v) => setForm((p) => ({ ...p, sizes: v }))}
+      />
 
-      <TextField label="Sizes (comma-separated)" value={form.sizes} onChange={(v) => setForm((p) => ({ ...p, sizes: v }))} />
-
-     <ImageUploadField
-            value={form.imageUrl ? form.imageUrl.split(",").map((s) => s.trim()) : []} 
-            onChange={(urls: string[]) =>
-                setForm((p) => ({ ...p, imageUrl: urls.join(", ") })) 
-            }
-            />
-
-
-
-      <div className="mb-4">
-        <label className="block font-medium mb-1">Created At *</label>
-        <input
-          type="datetime-local"
-          value={form.createdAt}
-          onChange={(e) => setForm((p) => ({ ...p, createdAt: e.target.value }))}
-          required
-          className="border rounded w-full p-2"
-        />
-      </div>
+      <ImageUploadField
+        value={form.imageUrl ? form.imageUrl.split(",").map((s) => s.trim()) : []}
+        onChange={(urls: string[]) =>
+          setForm((p) => ({ ...p, imageUrl: urls.join(", ") }))
+        }
+      />
     </>
   );
 };

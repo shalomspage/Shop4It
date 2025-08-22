@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import MiniProductCard from "@/components/order/MiniProductCard";
 import PurchasedOrder from "@/components/order/PurchasedOrder";
 import { useAppSelector } from "../hooks";
+import Spinner from "@/components/common/Spinner";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -27,7 +28,10 @@ const ProfilePage = () => {
   }, [initialized, isAuthenticated, router]);
 
   if (!initialized) {
-    return <p className="min-h-screen text-center mt-20">Loading...</p>;
+    return <div className="flex flex-col min-h-screen max-w-2xl gap-8 mx-auto p-6 text-center items-center justify-center">
+    <Spinner lg />
+    <p>Loading details...</p>
+  </div>;
   }
 
   return (

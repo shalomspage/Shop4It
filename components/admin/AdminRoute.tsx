@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import type { RootState } from '@/redux/store';
 import { isAdminUser } from '../utils/authHelpers';
+import Spinner from '../common/Spinner';
 
 
 interface AdminRouteProps {
@@ -21,7 +22,10 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     }
   }, [user, initialized, router]);
 
-  if (!initialized) return <div className='min-h-screen'>Loading...</div>;
+  if (!initialized) return <div className="flex flex-col min-h-screen max-w-2xl gap-8 mx-auto p-6 text-center items-center justify-center">
+    <Spinner lg />
+    <p>Loading details...</p>
+  </div>;
 
   return <>{children}</>;
 }
