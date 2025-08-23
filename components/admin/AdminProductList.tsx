@@ -31,8 +31,6 @@ const AdminProductList = () => {
       });
       if (!res.ok) throw new Error("Failed to fetch products");
       const data = await res.json();
-      console.log("Raw products data:", JSON.stringify(data, null, 2));
-      console.log("Products from backend:", data);
       setProducts(data);
     } catch (error) {
       console.error("Error loading products:", error);
@@ -40,39 +38,39 @@ const AdminProductList = () => {
       setLoading(false);
     }
   };
-     
-const handleDelete = async (id: string) => {
-  if (!confirm("Are you sure you want to delete this product?")) return;
-  try {
-    const res = await fetch(`${baseUrl}/api/products/${id}/`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    console.log("Delete response status:", res.status);
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Delete failed:", errorText);
-      throw new Error("Failed to delete product");
-    }
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-  } catch (error) {
-    console.error("Error deleting product:", error);
-  }
-};
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this product?")) return;
+    try {
+      const res = await fetch(`${baseUrl}/api/products/${id}/`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Delete failed:", errorText);
+        throw new Error("Failed to delete product");
+      }
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
 
   if (loading) {
-    return <div className="flex flex-col min-h-screen max-w-2xl gap-8 mx-auto p-6 text-center items-center justify-center">
-    <Spinner lg />
-    <p>Loading product details...</p>
-  </div>;
+    return (
+      <div className="flex flex-col min-h-[200px] gap-4 text-center items-center justify-center">
+        <Spinner lg />
+        <p>Loading products...</p>
+      </div>
+    );
   }
 
   if (products.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto min-h-screen">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Products</h1>
+      <div className="max-w-7xl bg-white rounded-lg shadow p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold">Products</h3>
           <Button onClick={() => router.push("/admin/products/new")}>Add New Product</Button>
         </div>
         <p>No products found.</p>
@@ -81,55 +79,59 @@ const handleDelete = async (id: string) => {
   }
 
   return (
-    <div className="max-w-7xl min-h-screen  bg-white p-4 m-4 lg:p-8 lg:m-8 rounded-lg shadow">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Products</h1>
-        <Button className="nav-btn" onClick={() => router.push("/admin/products/new")}>Add New Product</Button>
+    <div className="max-w-7xl bg-white rounded-lg shadow p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Products</h3>
+        <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>Add New Product</Button>
       </div>
 
-      <ul className="space-y-4">
-        {products.map(({ id, title, price, imageUrl }) => {
+      <table className="w-full text-sm text-left border-collapse">
+        <thead className="text-gray-500 border-b ">
+          <tr>
+            <th className="pb-2">Image</th>
+            <th className="pb-2">Title</th>
+            <th className="pb-2">Price</th>
+            <th className="pb-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map(({ id, title, price, imageUrl }) => {
+            const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
 
-  const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
-
-  return (
-    <li key={id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b pb-4 gap-4">
-      <div className="flex items-center gap-4">
-        {image ? (
-          <div className="w-20 h-20 relative flex-shrink-0">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover rounded"
-              
-              unoptimized
-            />
-          </div>
-        ) : (
-          <div className="w-20 h-20 flex items-center justify-center bg-gray-200 rounded text-gray-500 text-sm">
-            No Image
-          </div>
-        )}
-
-        <div>
-          <p className="font-semibold">{title}</p>
-          <p className="text-gray-600">${price.toFixed(2)}</p>
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className="flex gap-4">
-        <Button className="nav-btn" onClick={() => router.push(`/admin/products/${id}/edit`)}>Edit</Button>
-        <Button className="nav-btn-delete" onClick={() => handleDelete(id)}>Delete</Button>
-      </div>
-    </li>
-  );
-})}
-
-      </ul>
+            return (
+              <tr key={id} className="border-b last:border-none">
+                <td className="py-2">
+                  {image ? (
+                    <div className="w-16 h-16 relative">
+                      <Image src={image} alt={title} fill className="object-cover rounded" unoptimized />
+                    </div>
+                  ) : (
+                    <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded text-gray-500 text-xs">
+                      No Image
+                    </div>
+                  )}
+                </td>
+                <td className="py-2">{title}</td>
+                <td className="py-2">${price.toFixed(2)}</td>
+                <td className="py-2 flex gap-2">
+                  <Button className="nav-btn text-sm" onClick={() => router.push(`/admin/products/${id}/edit`)}>
+                    Edit
+                  </Button>
+                  <Button className="nav-btn-delete text-sm" onClick={() => handleDelete(id)}>
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };
 
 export default AdminProductList;
+
+
+
+

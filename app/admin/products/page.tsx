@@ -8,7 +8,7 @@ import AdminProductList from "@/components/admin/AdminProductList";
 
 export default function AdminPage() {
   return (
-    <div className="w-full min-h-screen mx-auto ">
+    <div className="w-full min-h-screen">
       {/* Products Management */}
       <section>
         <AdminProductList />
