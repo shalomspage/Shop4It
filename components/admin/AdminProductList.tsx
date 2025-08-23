@@ -26,14 +26,12 @@ const AdminProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/products/`, {
-        credentials: "include",
-      });
+      const res = await fetch(`${baseUrl}/api/products/`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch products");
       const data = await res.json();
       setProducts(data);
     } catch (error) {
-      console.error("Error loading products:", error);
+      console.error("Error fetching products:", error);
     } finally {
       setLoading(false);
     }
@@ -46,11 +44,7 @@ const AdminProductList = () => {
         method: "DELETE",
         credentials: "include",
       });
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("Delete failed:", errorText);
-        throw new Error("Failed to delete product");
-      }
+      if (!res.ok) throw new Error("Failed to delete product");
       setProducts((prev) => prev.filter((p) => p.id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -59,79 +53,77 @@ const AdminProductList = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-[200px] gap-4 text-center items-center justify-center">
+      <div className="flex flex-col min-h-[300px] items-center justify-center gap-4">
         <Spinner lg />
-        <p>Loading products...</p>
-      </div>
-    );
-  }
-
-  if (products.length === 0) {
-    return (
-      <div className="max-w-7xl bg-white rounded-lg shadow p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">Products</h3>
-          <Button onClick={() => router.push("/admin/products/new")}>Add New Product</Button>
-        </div>
-        <p>No products found.</p>
+        <p className="text-gray-500">Loading products...</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-7xl bg-white rounded-lg shadow p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">Products</h3>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold">Products</h2>
         <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>Add New Product</Button>
       </div>
 
-      <table className="w-full text-sm text-left border-collapse">
-        <thead className="text-gray-500 border-b ">
-          <tr>
-            <th className="pb-2">Image</th>
-            <th className="pb-2">Title</th>
-            <th className="pb-2">Price</th>
-            <th className="pb-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+      {/* Empty State */}
+      {products.length === 0 ? (
+        <p className="text-gray-500">No products found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map(({ id, title, price, imageUrl }) => {
             const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
-
             return (
-              <tr key={id} className="border-b last:border-none">
-                <td className="py-2">
-                  {image ? (
-                    <div className="w-16 h-16 relative">
-                      <Image src={image} alt={title} fill className="object-cover rounded" unoptimized />
-                    </div>
-                  ) : (
-                    <div className="w-16 h-16 flex items-center justify-center bg-gray-200 rounded text-gray-500 text-xs">
-                      No Image
-                    </div>
-                  )}
-                </td>
-                <td className="py-2">{title}</td>
-                <td className="py-2">${price.toFixed(2)}</td>
-                <td className="py-2 flex gap-2">
-                  <Button className="nav-btn text-sm" onClick={() => router.push(`/admin/products/${id}/edit`)}>
-                    Edit
-                  </Button>
-                  <Button className="nav-btn-delete text-sm" onClick={() => handleDelete(id)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
+              <div
+                key={id}
+                className="border rounded-lg shadow-sm hover:shadow-md transition bg-white"
+              >
+                {/* Image */}
+                {image ? (
+                  <div className="relative w-full h-48">
+                    <Image
+                      src={image}
+                      alt={title}
+                      fill
+                      className="object-cover rounded-t-lg"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500 rounded-t-lg">
+                    No Image
+                  </div>
+                )}
+
+                {/* Content */}
+                <div className="p-4">
+                  <h3 className="font-medium text-lg truncate">{title}</h3>
+                  <p className="text-gray-500 mb-4">${price.toFixed(2)}</p>
+
+                  <div className="flex gap-2">
+                    <Button
+                      className="nav-btn text-sm flex-1"
+                      onClick={() => router.push(`/admin/products/${id}/edit`)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="nav-btn-delete text-sm flex-1"
+                      onClick={() => handleDelete(id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              </div>
             );
           })}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 };
 
 export default AdminProductList;
-
-
-
-
