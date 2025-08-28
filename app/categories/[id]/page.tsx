@@ -1,24 +1,18 @@
 import { Product } from "@/app/types";
 import ProductCard from "@/components/home/ProductCard";
+import { fetchProductsByCategory } from "@/lib/api";
 
 interface CategoryPageProps {
   params: Promise<{ id: string }>;
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
-
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { id: categoryId } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
 
-  const res = await fetch(`${API_URL}/api/products/?category=${encodeURIComponent(categoryId)}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch products");
-
-  const products: Product[] = await res.json();
+  // Fetch products using the API helper
+  const products: Product[] = await fetchProductsByCategory(categoryId);
 
   return (
     <div className="main-max-width mx-auto padding-x py-9 min-h-screen">
