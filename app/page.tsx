@@ -10,10 +10,18 @@ const HomePage = () => {
     <>
       <Hero />
       <CategorySection />
-      {/* Featured Products (from backend) */}
-      <ProductSection title="Featured Products" />
-      {/* Popular Products (optional) */}
-      <ProductSection title="Popular Products" />
+
+      {/* Featured Products (temporarily using /popular/) */}
+      <ProductSection 
+        title="Featured Products" 
+        endpoint="/api/products/popular/" 
+      />
+
+      {/* Popular Products */}
+      <ProductSection 
+        title="Popular Products" 
+        endpoint="/api/products/popular/" 
+      />
     </>
   );
 };
