@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../uiComponentes/Button";
 import Spinner from "../common/Spinner";
+import { normalizeImage } from "@/lib/utils";
 
 interface Product {
   id: string;
@@ -84,7 +85,7 @@ const AdminProductList = () => {
                 {image ? (
                   <div className="relative w-full h-48">
                     <Image
-                      src={image}
+                      src={normalizeImage(image)}
                       alt={title}
                       fill
                       className="object-cover rounded-t-lg"
