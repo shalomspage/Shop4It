@@ -19,7 +19,10 @@ export type Product = {
   slug: string;
   category: number | string;
 };
-
+export interface Brand {
+  id: number | string;
+  name: string;
+}
 
 
 export type DynamicPageProps<T extends Record<string, string>> = {

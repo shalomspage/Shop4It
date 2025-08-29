@@ -1,4 +1,4 @@
-import { Category, Product } from "@/app/types";
+import { Category, Product, Brand } from "@/app/types";
 import axios from "axios";
 
 // Use environment variable for base URL
@@ -6,6 +6,11 @@ const API_URL = process.env.NEXT_PUBLIC_HOST!; // must include `/api` in product
 
 export const fetchCategories = async (): Promise<Category[]> => {
   const res = await axios.get(`${API_URL}/products/categories/`, { withCredentials: true });
+  return res.data;
+};
+
+export const fetchBrands = async (): Promise<Brand[]> => {
+  const res = await axios.get(`${API_URL}/products/brands/`);
   return res.data;
 };
 

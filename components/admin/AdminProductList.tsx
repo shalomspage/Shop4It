@@ -13,7 +13,7 @@ interface Product {
   imageUrl: string[];
 }
 
-const baseUrl = "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_HOST || "http://localhost:8000";
 
 const AdminProductList = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const AdminProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/products/`, { credentials: "include" });
+      const res = await fetch(`${API_URL}/api/products/`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch products");
       const data = await res.json();
       setProducts(data);
@@ -40,7 +40,7 @@ const AdminProductList = () => {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`${baseUrl}/api/products/${id}/`, {
+      const res = await fetch(`${API_URL}/api/products/${id}/`, {
         method: "DELETE",
         credentials: "include",
       });
