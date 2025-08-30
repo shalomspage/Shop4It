@@ -29,26 +29,30 @@ const AdminProductList = () => {
     try {
       const res = await fetch(`${API_URL}/api/products/`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch products");
+
       const data = await res.json();
 
-      // Normalize image field
+    
       type ApiProduct = {
-        id: string;
+        id: string | number;
         title?: string;
         price?: number | string;
         imageUrl?: string[];
+        images?: string[];
         image?: string;
       };
 
-      const normalized: Product[] = (data as ApiProduct[]).map((item) => ({
-        ...item,
+      const normalized = (data as ApiProduct[]).map((item) => ({
+        id: String(item.id),
+        title: item.title || "Untitled",
+        price: item.price ? Number(item.price) : 0,
         imageUrl: Array.isArray(item.imageUrl)
           ? item.imageUrl
+          : item.images
+          ? item.images
           : item.image
           ? [item.image]
           : [],
-        price: Number(item.price) || 0,
-        title: item.title || "Untitled",
       }));
 
       setProducts(normalized);
@@ -87,10 +91,7 @@ const AdminProductList = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-semibold">Products</h2>
-        <Button
-          className="nav-btn text-sm"
-          onClick={() => router.push("/admin/products/new")}
-        >
+        <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>
           Add New Product
         </Button>
       </div>
@@ -101,8 +102,7 @@ const AdminProductList = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map(({ id, title, price, imageUrl }) => {
-            const image = imageUrl.length > 0 ? normalizeImage(imageUrl[0]) : null;
-
+            const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
             return (
               <div
                 key={id}
@@ -112,7 +112,7 @@ const AdminProductList = () => {
                 {image ? (
                   <div className="relative w-full h-48">
                     <Image
-                      src={image}
+                      src={normalizeImage(image)}
                       alt={title}
                       fill
                       className="object-cover rounded-t-lg"
