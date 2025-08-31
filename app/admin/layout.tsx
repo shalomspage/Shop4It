@@ -46,7 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Bottom Nav (Mobile only) */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t flex justify-around p-2 md:hidden">
+        <nav className="fixed bottom-0 left-0 right-0 bg-[rgba(245,245,245,0.2)] backdrop-blur-lg border-t flex justify-around p-2 md:hidden">
           {links.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}

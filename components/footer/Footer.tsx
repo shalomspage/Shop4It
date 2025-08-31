@@ -1,10 +1,17 @@
+'use client'
 import React from 'react'
 import { FaLinkedin, FaFacebookF, FaYoutube } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+import { usePathname } from 'next/navigation';
+
+
+
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
   return (
-    <footer className="bg-black text-white w-full py-16">
+    <footer className={`${isAdmin ? "md:block hidden" : ""} bg-black text-white w-full py-16`}>
       <div className="flex justify-between items-center main-max-width mx-auto padding-x flex-wrap gap-6 max-md:justify-center">
         {/* Logo & Description */}
         <div className="flex flex-col gap-6 w-[500px]">

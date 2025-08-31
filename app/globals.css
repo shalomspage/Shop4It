@@ -141,6 +141,7 @@ main {
 
 
 
+
 @layer utilities {
   .search-form {
     @apply w-[250px] max-sm:w-[200px] max-sm:h-[40px] max-sm:text-[12px] 
