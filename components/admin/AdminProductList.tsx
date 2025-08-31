@@ -89,12 +89,12 @@ const AdminProductList = () => {
   return (
     <div className="max-w-7xl bg-white rounded-lg shadow p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold">Products</h2>
-        <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>
-          Add New Product
-        </Button>
-      </div>
+    <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+  <h2 className="text-2xl font-semibold">Products</h2>
+  <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>
+    Add New Product
+  </Button>
+</div>
 
       {/* Empty State */}
       {products.length === 0 ? (
