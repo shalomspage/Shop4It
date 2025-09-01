@@ -11,7 +11,7 @@ const SearchForm = () => {
         placeholder="Search Products"
       />
 
-      <button className="size-[30px] rounded-full bg-black flex justify-center items-center cursor-pointer text-white">
+      <button className="size-[30px] rounded-full bg-gray-700 flex justify-center items-center cursor-pointer text-white">
         <Search className="size-4" />
       </button>
     </Form>

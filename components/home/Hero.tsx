@@ -15,7 +15,7 @@ const Hero = () => {
       </p>
       <Link
         href="/products"
-        className="inline-block bg-black text-white text-lg font-semibold px-8 py-3 rounded-xl shadow-lg hover:bg-gray-900 transition-all duration-300"
+        className="inline-block bg-gray-700 text-white text-lg font-semibold px-8 py-3 rounded-xl shadow-lg hover:bg-green-900 transition-all duration-300"
       >
         Shop Now
       </Link>

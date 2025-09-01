@@ -19,7 +19,7 @@ export default function CartIcon() {
   return (
     <Link href="/cart" className="relative">
       <div className="flex items-center h-[30px] w-[30px] justify-center cursor-pointer">
-        <FaCartShopping className="text-4xl" />
+        <FaCartShopping className="text-4xl text-green-800" />
         {cartCount > 0 && (
           <span className="absolute top-[-10] right-4 bg-red-500 text-white text-xs rounded-full px-1">
             {cartCount}

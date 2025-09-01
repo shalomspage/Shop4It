@@ -92,64 +92,49 @@ const AdminProductList = () => {
     <div className="flex flex-wrap justify-between items-center mb-4 ">
   <h2 className="text-xl font-semibold">Products</h2>
   <Button className="nav-btn text-sm" onClick={() => router.push("/admin/products/new")}>
-    Add New Product
+    Add Product
   </Button>
 </div>
 
       {/* Empty State */}
-      {products.length === 0 ? (
-        <p className="text-gray-500">No products found.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map(({ id, title, price, imageUrl }) => {
-            const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
-            return (
-              <div
-                key={id}
-                className="border rounded-lg shadow-sm hover:shadow-md transition bg-white"
-              >
-                {/* Image */}
-                {image ? (
-                  <div className="relative w-full h-48">
-                    <Image
-                      src={normalizeImage(image)}
-                      alt={title}
-                      fill
-                      className="object-cover rounded-t-lg"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <div className="w-full h-48 flex items-center justify-center bg-gray-200 text-gray-500 rounded-t-lg">
-                    No Image
-                  </div>
-                )}
-
-                {/* Content */}
-                <div className="p-4">
-                  <h3 className="font-medium text-lg truncate">{title}</h3>
-                  <p className="text-gray-500 mb-4">${price.toFixed(2)}</p>
-
-                  <div className="flex gap-2">
-                    <Button
-                      className="nav-btn text-sm flex-1"
-                      onClick={() => router.push(`/admin/products/${id}/edit`)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      className="nav-btn-delete text-sm flex-1"
-                      onClick={() => handleDelete(id)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+{products.length === 0 ? (
+  <p className="text-gray-500">No products found.</p>
+) : (
+  <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    {products.map(({ id, title, price, imageUrl }) => {
+      const image = imageUrl && imageUrl.length > 0 ? imageUrl[0] : null;
+      return (
+        <div key={id} className="border rounded-lg shadow-sm hover:shadow-md transition bg-white flex flex-col">
+          {/* Image */}
+          {image ? (
+            <div className="relative w-full h-32">
+              <Image src={normalizeImage(image)} alt={title} fill className="object-cover rounded-t-lg" unoptimized />
+            </div>
+          ) : (
+            <div className="w-full h-32 flex items-center justify-center bg-gray-200 text-gray-500 rounded-t-lg">
+              No Image
+            </div>
+          )}
+          {/* Content */}
+          <div className="p-2 flex-1">
+            <h3 className="font-medium text-base truncate">{title}</h3>
+            <p className="text-gray-500 mb-2 text-sm">${price.toFixed(2)}</p>
+            <div className="flex gap-2 justify-end">
+              <Button className="nav-btn text-xs" onClick={() => router.push(`/admin/products/${id}/edit`)}>
+                Edit
+              </Button>
+              <Button className="nav-btn-delete text-xs" onClick={() => handleDelete(id)}>
+                Delete
+              </Button>
+            </div>
+          </div>
         </div>
-      )}
+      );
+    })}
+  </div>
+)}
+
+
     </div>
   );
 };
