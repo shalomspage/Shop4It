@@ -135,7 +135,7 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-7xl min-h-screen bg-white p-8 m-8 rounded-lg shadow"
+      className="max-w-7xl min-h-screen bg-white p-8 rounded-lg shadow"
     >
       {message && (
         <div

@@ -138,7 +138,7 @@ export default function EditProductPage() {
     );
 
   return (
-    <div className="max-w-7xl min-h-screen pl-4 md:pl-8 lg:pl-20 bg-white p-8 m-8 rounded-lg shadow">
+    <div className="max-w-7xl min-h-screen pl-4 md:pl-8 lg:pl-20 bg-white p-8 rounded-lg shadow">
       <h1 className="flex text-2xl font-semibold mb-8">Edit Product</h1>
 
       <ProductFormFields form={form} setForm={setFormState} categories={categories} brands={brands} />

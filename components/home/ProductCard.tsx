@@ -2,6 +2,7 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Product } from "@/app/types"
+import { ShoppingCart } from "lucide-react" // optional, for Buy Now icon
 
 interface Props {
   product: Product
@@ -11,26 +12,54 @@ const ProductCard: React.FC<Props> = ({ product }) => {
   const imageSrc = product.imageUrl?.[0] || "/placeholder.png"
 
   return (
-    <Link href={`/products/${product.id}`}>
-      <div className="w-full max-w-[260px] rounded-lg shadow-md bg-white flex flex-col items-center gap-4 px-5 py-6 transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer">
+    
+    <div className="w-[280px] bg-white rounded-2xl shadow-md overflow-hidden transition hover:shadow-xl hover:scale-[1.02] cursor-pointer">
+     
+     {/* Top Image Section */}
+<div className="relative w-full h-[220px] p-[2px] bg-gray-200 dark:bg-gray-700 rounded-2xl">
+  <Image
+    src={imageSrc}
+    alt={product.title}
+    fill
+    className="object-cover rounded-2xl"
+  />
 
-        <div className="w-[200px] h-[200px] rounded-md overflow-hidden">
-          <Image
-            src={imageSrc}
-            alt={product.title}
-            width={200}
-            height={200}
-            className="object-cover w-full h-full"
-          />
+  {/* Badge */}
+  <span className="absolute top-4 left-4 bg-gray-900 text-white text-xs px-3 py-1 rounded-full shadow">
+    Best Seller
+  </span>
+
+  {/* Logo (replace with your own logo if needed) */}
+  {/* <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-1 shadow">
+    <Image
+      src="/nike-logo.png" // update with your brand/logo
+      alt="brand"
+      width={20}
+      height={20}
+    />
+  </div> */}
+</div>
+
+
+      {/* Product Info */}
+      <div className="p-4 flex flex-col gap-1">
+        <h3 className="text-sm font-semibold text-gray-900">{product.title}</h3>
+        <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
+
+        {/* Price + Buy Now */}
+        <div className="mt-4 flex items-center justify-between">
+          <span className="bg-gray-100 px-3 py-1 rounded-full font-medium text-green-800">
+            ${product.price}
+          </span>
+          <Link
+            href={`/products/${product.id}`}
+            className="bg-gray-700 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-green-800 transition"
+          >
+            Buy Now <ShoppingCart size={16} />
+          </Link>
         </div>
-        <p className="text-center text-lg font-semibold text-gray-800">
-          {product.title}
-        </p>
-        <p className="text-[18px] text-center font-bold text-black">
-          ${product.price}
-        </p>
       </div>
-    </Link>
+    </div>
   )
 }
 

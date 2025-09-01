@@ -8,7 +8,7 @@ import SalesOverview from "@/components/sales-overview/page";
 export default function AdminPage() {
   return (
     <div className="max-w-7xl min-h-screen">
-      <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
+      <h2 className="text-xl font-semibold mb-4">Dashboard</h2>
 
       <DashboardStats />
       <RecentOrders />

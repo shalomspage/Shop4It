@@ -13,7 +13,7 @@ const orders = [
 export default function OrdersPage() {
   return (
     <div className="max-w-7xl min-h-screen">
-      <h2 className="text-2xl font-semibold mb-6">All Orders</h2>
+      <h2 className="text-xl font-semibold mb-6">All Orders</h2>
 
       <section className="bg-white rounded-lg shadow p-6">
         <table className="w-full text-sm text-left">

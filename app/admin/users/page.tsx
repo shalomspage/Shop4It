@@ -11,8 +11,8 @@ const users = [
 
 export default function UsersPage() {
   return (
-    <div className="max-w-7xl min-h-screen p-4 md:p-6">
-      <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">All Users</h2>
+    <div className="max-w-7xl min-h-screen ">
+      <h2 className="text-xl  font-semibold mb-4 md:mb-6">All Users</h2>
       <section className="bg-white rounded-lg shadow p-4 md:p-6">
         <div className="hidden md:block">
           <table className="w-full text-sm text-left">
