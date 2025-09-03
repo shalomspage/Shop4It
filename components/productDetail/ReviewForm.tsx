@@ -55,12 +55,13 @@ const ReviewForm = () => {
             onPointerLeave={handleHoverOut}
             onClick={() => handleStarClick({ rating, review })}
             className={cn(
-              "w-7 h-7 cursor-pointer text-black hover:text-black transition",
+              "w-7 h-7 cursor-pointer text-orange-400 hover:text-orange-400 transition",
               rating <= hoverRating ||
                 (rating <= clickedRating && hoverRating < 1)
-                ? "fill-black"
+                ? "fill-orange-400"
                 : ""
             )}
+            
           />
         ))}
       </div>
@@ -79,7 +80,7 @@ const ReviewForm = () => {
           required
         />
 
-        <Button className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-900 transition">
+        <Button className="bg-gray-700 text-white w-full py-2 rounded-lg hover:bg-green-900 transition coursor-pointer">
           Add Review
         </Button>
       </form>

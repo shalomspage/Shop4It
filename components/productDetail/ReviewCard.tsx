@@ -49,7 +49,7 @@ const ReviewCard = () => {
 
           <div className="flex gap-1 mt-2">
             {starArray.map((star) => (
-              <Star key={star} className="size-5 cursor-pointer fill-black" />
+              <Star key={star} className="size-5 cursor-pointer fill-orange-400 text-orange-400" />
             ))}
           </div>
 

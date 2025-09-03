@@ -68,7 +68,7 @@ const ProductInfo = ({ product }: ProductProps) => {
                   onClick={() => setSelectedImageIndex(idx)}
                   className={clsx(
                     "w-16 h-16 rounded border cursor-pointer overflow-hidden",
-                    selectedImageIndex === idx ? "border-black" : "border-gray-300"
+                    selectedImageIndex === idx ? "border-gray-800" : "border-gray-300"
                   )}
                 >
                   <Image
@@ -90,7 +90,7 @@ const ProductInfo = ({ product }: ProductProps) => {
             <h1 className="text-2xl sm:text-3xl font-bold">
                   {product.title}
                 </h1>
-            <h3 className="text-2xl font-semibold text-black">${product.price}</h3>
+            <h3 className="text-2xl font-semibold text-green-800">${product.price}</h3>
             <div className="text-sm text-gray-600">
               <p><strong>Type:</strong> {product.clothesType}</p>
               <p><strong>Rating:</strong> {product.ratings} ★</p>
@@ -108,8 +108,8 @@ const ProductInfo = ({ product }: ProductProps) => {
                   className={clsx(
                     "px-4 py-2 border rounded-full text-sm capitalize",
                     selectedColor === color
-                      ? "bg-black text-white border-black"
-                      : "bg-white text-black border-gray-300"
+                      ? "bg-green-800 text-white border-green-800"
+                      : "bg-white text-gray-800 border-gray-300"
                   )}
                 >
                   {color}
@@ -129,8 +129,8 @@ const ProductInfo = ({ product }: ProductProps) => {
                   className={clsx(
                     "px-4 py-2 border rounded text-sm",
                     selectedSize === size
-                      ? "bg-black text-white border-black"
-                      : "bg-white text-black border-gray-300"
+                      ? "bg-green-800 text-white border-green-800"
+                      : "bg-white text-gray-800 border-gray-300"
                   )}
                 >
                   {size}

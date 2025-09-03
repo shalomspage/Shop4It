@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Product } from "@/app/types"
 import { ShoppingCart } from "lucide-react" // optional, for Buy Now icon
+import StarRating from "../star-rating/page"
 
 interface Props {
   product: Product
@@ -25,7 +26,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
   />
 
   {/* Badge */}
-  <span className="absolute top-4 left-4 bg-gray-900 text-white text-xs px-3 py-1 rounded-full shadow">
+  <span className="absolute top-4 left-4 bg-green-900/40 text-white text-xs px-3 py-1 rounded-full shadow backdrop-blur-lg">
     Best Seller
   </span>
 
@@ -58,6 +59,10 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             Buy Now <ShoppingCart size={16} />
           </Link>
         </div>
+        <StarRating
+        size={15}
+        className="mt-2 mb-2"
+        />
       </div>
     </div>
   )

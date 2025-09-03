@@ -46,14 +46,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </h3>
         <div className="w-full flex py-6 gap-6 flex-wrap items-center justify-between max-md:justify-center">
           <div className="w-[250px] h-[250px] bg-gray-100 rounded-lg px-4 py-6 flex flex-col gap-3 items-center justify-center shadow-lg">
-            <h1 className="text-5xl font-bold text-gray-800">5.0</h1>
+            <h1 className="text-5xl font-bold text-green-800">5.0</h1>
             <small className="text-gray-600 text-sm">of 10 review(s)</small>
             <div className="flex gap-2">
-              <Star className="fill-black w-5 h-5" />
-              <Star className="fill-black w-5 h-5" />
-              <Star className="fill-black w-5 h-5" />
-              <Star className="fill-black w-5 h-5" />
-              <Star className="fill-gray-100 w-5 h-5" />
+              <Star className="fill-orange-400 w-5 h-5 text-orange-400" />
+              <Star className="fill-orange-400 w-5 h-5 text-orange-400" />
+              <Star className="fill-orange-400 w-5 h-5 text-orange-400" />
+              <Star className="fill-orange-400 w-5 h-5 text-orange-400" />
+              <Star className="fill-gray-100 w-5 h-5 text-orange-400" />
             </div>
           </div>
 
@@ -61,7 +61,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <RatingProgressBar rating="Excellent" numRating={10} />
             <RatingProgressBar rating="Very Good" numRating={8} />
             <RatingProgressBar rating="Good" numRating={6} />
-            <RatingProgressBar rating="Fair" numRating={5} />
+            <RatingProgressBar rating="Fair" numRating={9} />
             <RatingProgressBar rating="Poor" numRating={3} />
           </div>
         </div>
