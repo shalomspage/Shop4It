@@ -1,17 +1,14 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { Product } from "@/app/types";
-import axios from "axios";
+import { fetchPopularProducts } from "@/lib/api";
 import Spinner from "../common/Spinner";
 
 interface Props {
   title: string;
-  endpoint?: string; // relative to API_URL, e.g., "/products/popular/"
 }
 
-const ProductSection: React.FC<Props> = ({ title, endpoint = "/products/popular/" }) => {
+const ProductSection: React.FC<Props> = ({ title }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,20 +22,19 @@ const ProductSection: React.FC<Props> = ({ title, endpoint = "/products/popular/
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
-        const baseURL = process.env.NEXT_PUBLIC_API_URL; // must exist
-        const res = await axios.get(`${baseURL}${endpoint}`);
-        setProducts(shuffleArray(res.data));
+        setLoading(true);
+        const data = await fetchPopularProducts();
+        setProducts(shuffleArray(data));
       } catch (error) {
-        console.error(`Error fetching products from ${endpoint}:`, error);
+        console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchProducts();
-  }, [endpoint]);
+    loadProducts();
+  }, []);
 
   return (
     <section className="main-max-width padding-x mx-auto my-16">
