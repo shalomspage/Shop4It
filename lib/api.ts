@@ -1,8 +1,11 @@
 import { Category, Product, Brand } from "@/app/types";
 import axios from "axios";
 
-// Use environment variable for base URL
-const API_URL = process.env.NEXT_PUBLIC_HOST!; // must include `/api` in production env
+// Dynamically set API URL based on environment
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://your-backend.onrender.com/api" // your Render backend URL
+    : "http://localhost:8000/api";           // local dev
 
 export const fetchCategories = async (): Promise<Category[]> => {
   const res = await axios.get(`${API_URL}/products/categories/`, { withCredentials: true });
