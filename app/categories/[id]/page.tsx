@@ -6,14 +6,13 @@ import ProductCard from "@/components/home/ProductCard";
 import { fetchProductsByCategory } from "@/lib/api";
 import Spinner from "@/components/common/Spinner";
 
-// ✅ Correct client-side props typing
 interface CategoryPageProps {
-  params: { id: string }; // plain object, not a Promise
+  params: { id: string }; 
   searchParams?: Record<string, string | string[] | undefined>;
 }
 
 export default function CategoryPage({ params, searchParams }: CategoryPageProps) {
-  const { id: categoryId } = params;
+  const { id: categoryId } = params; 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +20,7 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const data = await fetchProductsByCategory(categoryId);
+        const data = await fetchProductsByCategory(categoryId); 
         setProducts(data);
       } catch (error) {
         console.error("Failed to fetch products", error);
