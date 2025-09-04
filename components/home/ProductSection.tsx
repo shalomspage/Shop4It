@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { Product } from "@/app/types";
