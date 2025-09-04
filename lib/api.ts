@@ -1,11 +1,7 @@
 import { Category, Product, Brand } from "@/app/types";
 import axios from "axios";
 
-// Dynamically set API URL based on environment
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://ecommerce-django-backend-1.onrender.com/api" // your Render backend URL
-    : "http://localhost:8000/api";           // local dev
+const API_URL = process.env.NEXT_PUBLIC_API_URL!; // guaranteed to exist
 
 export const fetchCategories = async (): Promise<Category[]> => {
   const res = await axios.get(`${API_URL}/products/categories/`, { withCredentials: true });
@@ -34,8 +30,8 @@ export const getProductById = async (id: string): Promise<Product | null> => {
     return null;
   }
 };
+
 export const fetchPopularProducts = async (): Promise<Product[]> => {
   const res = await axios.get(`${API_URL}/products/popular/`, { withCredentials: true });
   return res.data;
 };
-

@@ -22,7 +22,7 @@ const CategorySection: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/products/categories/`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/categories/`);
         setCategories(shuffleArray(res.data));
       } catch (error) {
         console.error("Error fetching categories:", error);

@@ -8,14 +8,13 @@ import Spinner from "../common/Spinner";
 
 interface Props {
   title: string;
-  endpoint?: string; // optional endpoint
+  endpoint?: string; // relative to API_URL, e.g., "/products/popular/"
 }
 
-const ProductSection: React.FC<Props> = ({ title, endpoint = "/api/products/popular/" }) => {
+const ProductSection: React.FC<Props> = ({ title, endpoint = "/products/popular/" }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fisher–Yates shuffle function
   const shuffleArray = (array: Product[]) => {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -28,8 +27,9 @@ const ProductSection: React.FC<Props> = ({ title, endpoint = "/api/products/popu
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}${endpoint}`);
-        setProducts(shuffleArray(res.data)); // shuffle before setting
+        const baseURL = process.env.NEXT_PUBLIC_API_URL; // must exist
+        const res = await axios.get(`${baseURL}${endpoint}`);
+        setProducts(shuffleArray(res.data));
       } catch (error) {
         console.error(`Error fetching products from ${endpoint}:`, error);
       } finally {

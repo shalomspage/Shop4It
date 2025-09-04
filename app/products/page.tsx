@@ -12,17 +12,18 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get<Product[]>(process.env.NEXT_PUBLIC_API_URL || "");
-      setProducts(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  try {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+    const res = await axios.get<Product[]>(`${baseURL}/products/`);
+    setProducts(Array.isArray(res.data) ? res.data : []);
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    setProducts([]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchProducts();
