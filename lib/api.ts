@@ -4,7 +4,7 @@ import axios from "axios";
 // Dynamically set API URL based on environment
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://your-backend.onrender.com/api" // your Render backend URL
+    ? "https://ecommerce-django-backend-1.onrender.com/api" // your Render backend URL
     : "http://localhost:8000/api";           // local dev
 
 export const fetchCategories = async (): Promise<Category[]> => {
