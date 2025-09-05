@@ -18,6 +18,7 @@ export type Product = {
   is_featured: boolean;
   slug: string;
   category: number | string;
+  category_name?: string 
 };
 export interface Brand {
   id: number | string;

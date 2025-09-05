@@ -18,11 +18,20 @@ export const fetchBrands = async (): Promise<Brand[]> => {
 
 
 export const fetchProductsByCategory = async (id: string): Promise<Product[]> => {
-  const res = await axios.get(`${API_URL}/products/`, {
+  const res = await axios.get<Product[]>(`${API_URL}/products/`, {
     params: { category: id },
   });
-  return res.data;
+
+  // Map products and add category_name if missing
+  const productsWithCategoryName: Product[] = res.data.map((p) => ({
+    ...p,
+    category_name: p.category_name ?? `Category ${id}`, // ensure TS knows it exists
+  }));
+
+  return productsWithCategoryName;
 };
+
+
 
 
 export const getProductById = async (id: string): Promise<Product | null> => {
