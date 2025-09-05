@@ -17,9 +17,9 @@ export const fetchBrands = async (): Promise<Brand[]> => {
 };
 
 
-export const fetchProductsByCategory = async (slug: string): Promise<Product[]> => {
+export const fetchProductsByCategory = async (id: string): Promise<Product[]> => {
   const res = await axios.get(`${API_URL}/products/`, {
-    params: { category: slug },
+    params: { category: id },
   });
   return res.data;
 };
