@@ -3,7 +3,7 @@ import { ImageLoaderProps } from "next/image";
 
 const cloudinaryLoader = ({ src, width, quality }: ImageLoaderProps): string => {
   if (src.startsWith("http")) {
-    return src; // ✅ already a secure_url
+    return src; 
   }
 
   const q = quality || 75;
