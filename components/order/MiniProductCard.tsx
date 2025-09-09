@@ -15,13 +15,13 @@ interface MiniProductCardProps {
 const MiniProductCard: React.FC<MiniProductCardProps> = ({ product }) => {
   if (!product) return null; 
   return (
-    <div className="w-[220px] rounded-lg shadow-md bg-white flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer">
+    <div className="rounded-lg shadow-md bg-white flex flex-col items-center px-4 py-5 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer">
       <div className="w-[160px] h-[160px] rounded-md overflow-hidden">
         <Image
           src={product.image}
           className="object-cover w-full h-full"
-          width={160}
-          height={160}
+          width={200}
+          height={200}
           alt={product.title}
         />
       </div>
