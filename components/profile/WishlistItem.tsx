@@ -1,28 +1,57 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/app/hooks";
+import { removeFromWishlist } from "@/app/features/wishlistSlice";
 
-interface WishlistItemProps {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-}
+type WishlistItemProps = {
+  item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  };
+};
 
-const WishlistItem = ({ id, title, price, image }: WishlistItemProps) => {
+const WishlistItem = ({ item }: WishlistItemProps) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   return (
-    <div className="border rounded-lg shadow-sm p-3 flex flex-col items-center">
-      <Image
-        src={image}
-        alt={title}
-        width={120}
-        height={120}
-        className="rounded-md object-cover"
-      />
-      <h3 className="mt-2 text-sm font-medium text-gray-800">{title}</h3>
-      <p className="text-gray-600 text-sm">${price.toFixed(2)}</p>
-      <button className="mt-2 text-sm text-red-600 hover:underline">
-        Remove
-      </button>
-    </div>
+    <li className="flex items-center justify-between py-4 flex-wrap gap-2">
+      {/* Product Info */}
+      <div className="flex items-center gap-4 ">
+        <div className="w-16 h-16 relative flex-shrink-0">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            className="object-cover rounded"
+          />
+        </div>
+        <div>
+          <p className="font-semibold">{item.title}</p>
+          <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-3">
+        <button
+          className="text-blue-500 text-sm hover:underline cursor-pointer"
+          onClick={() => router.push(`/products/${item.id}`)}
+        >
+          View
+        </button>
+        <button
+          className="text-red-500 text-sm hover:underline cursor-pointer"
+          onClick={() => dispatch(removeFromWishlist(item.id))}
+        >
+          Remove
+        </button>
+      </div>
+    </li>
   );
 };
 

@@ -50,7 +50,7 @@ const CheckoutPage = () => {
             <input type="text" placeholder="Address" className="w-full p-3 border rounded" />
             <input type="text" placeholder="City" className="w-full p-3 border rounded" />
             <input type="text" placeholder="Postal Code" className="w-full p-3 border rounded" />
-            <button className="w-full bg-black text-white py-3 rounded hover:bg-gray-800">
+            <button className="default-btn w-full" type="submit">
               Proceed to Payment
             </button>
           </form>
@@ -78,13 +78,13 @@ const CheckoutPage = () => {
                       <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
                   </div>
-                  <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-semibold text-green-700">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
               <hr />
               <div className="flex justify-between font-bold text-lg mt-4">
                 <span>Total:</span>
-                <span>
+                <span className="text-green-700">
                   $
                   {items
                     .reduce((total, item) => total + item.price * item.quantity, 0)

@@ -130,14 +130,14 @@ export default function CartPage() {
   <div className="text-right mb-6">
     <p>Total products: ${subtotal.toFixed(2)}</p>
     <p>Estimated shipping costs: ${shipping.toFixed(2)}</p>
-    <p className="font-bold text-lg">Total: ${grandTotal.toFixed(2)}</p>
+    <p className="font-bold text-lg text-green-700">Total: ${grandTotal.toFixed(2)}</p>
   </div>
 
   {/* Buttons aligned side by side */}
-  <div className="flex justify-end gap-4">
+  <div className="flex justify-end gap-4 flex-wrap">
     <Link
       href="/products"
-      className="px-4 py-2 border rounded hover:bg-gray-100"
+      className="default-btn"
     >
       Continue Shopping
     </Link>

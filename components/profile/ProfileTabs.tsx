@@ -17,21 +17,24 @@ const ProfileTabs = () => {
   return (
     <div className="w-full">
       {/* Tab buttons */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6 sm:justify-start">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-md font-medium transition ${
-              activeTab === tab.id
-                ? "bg-black text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={`
+              px-3 py-2 sm:px-4 sm:py-2 
+              rounded-md 
+              font-medium 
+              transition 
+              text-sm 
+              ${activeTab === tab.id ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700 hover:bg-green-700 hover:text-white"}
+            `}
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      {tab.label}
+    </button>
+  ))}
+</div>
 
       {/* Tab Content */}
       <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -40,7 +43,7 @@ const ProfileTabs = () => {
         {activeTab === "wishlist" && <Wishlist />}
       </div>
     </div>
-  );
+  ); 
 };
 
 export default ProfileTabs;
