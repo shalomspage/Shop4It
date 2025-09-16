@@ -16,7 +16,7 @@ const ProfileTabs = () => {
 
   return (
     <div className="w-full">
-      {/* Tab buttons */}c
+      {/* Tab buttons */}
       <div className="flex flex-wrap gap-2 mb-6 sm:justify-start">
         {tabs.map((tab) => (
           <button
