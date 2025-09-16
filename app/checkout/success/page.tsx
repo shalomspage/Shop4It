@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import Spinner from "@/components/common/Spinner"; // adjust path if different
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
 
@@ -13,7 +15,8 @@ export default function CheckoutSuccessPage() {
         ✅ Order Placed Successfully!
       </h1>
       <p className="text-gray-700 mb-2">
-        Thank you for your purchase. Your order has been received and is being processed.
+        Thank you for your purchase. Your order has been received and is being
+        processed.
       </p>
 
       {orderId && (
@@ -22,12 +25,23 @@ export default function CheckoutSuccessPage() {
         </p>
       )}
 
-      <Link
-        href="/"
-        className="default-btn px-6 py-3 rounded-lg"
-      >
+      <Link href="/" className="default-btn px-6 py-3 rounded-lg">
         Back to Home
       </Link>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <Spinner lg />
+        </div>
+      }
+    >
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
