@@ -1,35 +1,45 @@
-import React from 'react'
-import Image from "next/image"
-
-
+import Image from "next/image";
+import React from "react";
 
 interface MiniProductCardProps {
   product: {
-  id: string;
-  image: string;
-  title: string;
-  price: number;
-};
+    id: number | string;
+    title: string;
+    image?: string | null;
+    price?: number;
+  };
 }
 
 const MiniProductCard: React.FC<MiniProductCardProps> = ({ product }) => {
-  if (!product) return null; 
+  const fallback = "fallback.png";
+
+  // Pre-compute the src safely
+  let src: string = fallback;
+  if (product.image) {
+    if (product.image.startsWith("http")) {
+      src = product.image;
+    } else if (process.env.NEXT_PUBLIC_HOST) {
+      src = `${process.env.NEXT_PUBLIC_HOST}${product.image}`;
+    }
+  }
+
   return (
-    <div className="rounded-lg shadow-md bg-white flex flex-col items-center px-4 py-5 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer">
-      <div className="w-[160px] h-[160px] rounded-md overflow-hidden">
+    <div className="border rounded p-3 flex flex-col items-center">
+      <div className="relative w-24 h-24">
         <Image
-          src={product.image}
-          className="object-cover w-full h-full"
-          width={200}
-          height={200}
+          src={src}
           alt={product.title}
+          fill
+          className="object-cover rounded"
         />
       </div>
 
-      <p className="text-center text-base font-medium text-gray-800">{product.title}</p>
-      <p className="text-[16px] text-center font-bold text-black">${product.price.toFixed(2)}</p>
+      <p className="mt-2 text-sm font-medium text-gray-800">{product.title}</p>
+      {product.price !== undefined && (
+        <p className="text-xs text-gray-600">${product.price}</p>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default MiniProductCard
+export default MiniProductCard;

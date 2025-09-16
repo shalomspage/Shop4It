@@ -7,8 +7,8 @@ interface User {
   first_name?: string;
   last_name?: string;
   isAdmin?: boolean;
-  is_staff?:boolean;
-  is_superuser?:boolean
+  is_staff?: boolean;
+  is_superuser?: boolean;
 }
 
 export interface AuthState {
@@ -39,14 +39,17 @@ export const authSlice = createSlice({
       state.token = action.payload.token
       state.isAuthenticated = !!action.payload.token
 
-      
       if (action.payload.token) {
         localStorage.setItem('authToken', action.payload.token)
+      } else {
+        localStorage.removeItem('authToken')
       }
 
       if (action.payload.user !== undefined) {
         state.user = action.payload.user
       }
+
+      state.initialized = true
     },
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload
@@ -55,6 +58,7 @@ export const authSlice = createSlice({
       state.token = null
       state.isAuthenticated = false
       state.user = null
+      state.initialized = true 
       localStorage.removeItem('authToken')
     },
     setInitialized: (state) => {

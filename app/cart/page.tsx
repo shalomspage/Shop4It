@@ -23,7 +23,7 @@ export default function CartPage() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const shipping = items.length > 0 ? 8 : 0; // example flat shipping fee
+  const shipping = items.length > 0 ? 8 : 0;
   const grandTotal = subtotal + shipping;
 
   if (items.length === 0) {

@@ -28,7 +28,7 @@ const ProfileTabs = () => {
               font-medium 
               transition 
               text-sm 
-              ${activeTab === tab.id ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700 hover:bg-green-700 hover:text-white"}
+              ${activeTab === tab.id ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-700 hover:bg-green-700 hover:text-white cursor-pointer"}
             `}
           >
       {tab.label}

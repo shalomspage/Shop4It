@@ -19,7 +19,7 @@ export const rehydrateAuth = createAsyncThunk(
         });
 
         let user = userResponse.data;
-        console.log('rehydrateAuth -> fetched user:', user);
+       
 
         // Set isAdmin based on backend fields
         const isAdmin = user.is_staff || user.is_superuser;

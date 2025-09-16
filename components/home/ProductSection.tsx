@@ -7,6 +7,7 @@ import Spinner from "../common/Spinner";
 
 interface Props {
   title: string;
+  endpoint?: string;
 }
 
 const ProductSection: React.FC<Props> = ({ title }) => {

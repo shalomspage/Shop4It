@@ -1,11 +1,15 @@
 import ProfileTabs from "@/components/profile/ProfileTabs";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function ProfilePage() {
   return (
-    <section className="min-h-screen main-max-width padding-x mx-auto my-10">
+ 
+      <div  className="min-h-screen main-max-width padding-x mx-auto my-10">
       <h1 className="text-2xl font-bold mb-8 text-center">My Profile</h1>
-     
+        <ProtectedRoute>
       <ProfileTabs />
-    </section>
+      </ProtectedRoute>
+      </div>
+ 
   );
 }
