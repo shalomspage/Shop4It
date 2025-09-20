@@ -74,7 +74,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       <ReviewCardContainer />
-      <ProductSection title="Products from the same category" />
+        <ProductSection
+        title="Products from the same category"
+        categoryId={product.category}
+        excludeId={product.id}
+      />
     </>
   );
 }

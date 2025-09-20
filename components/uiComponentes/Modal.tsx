@@ -10,7 +10,7 @@ interface Props {
 const Modal = ({ children }: Props) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
           Click to add a review
         </Button>
@@ -25,5 +25,6 @@ const Modal = ({ children }: Props) => {
     </Dialog>
   );
 };
+
 
 export default Modal;

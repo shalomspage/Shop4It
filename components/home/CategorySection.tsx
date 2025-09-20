@@ -1,29 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Category } from "@/app/types";
 import axios from "axios";
 import Spinner from "../common/Spinner";
-import CategoryCard from "./CategoryCard"; // your existing component
+import CategoryCard from "./CategoryCard";
 
-const CategorySection: React.FC = () => {
+const CategorySection = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const shuffleArray = (array: Category[]) => {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/categories/`);
-        setCategories(shuffleArray(res.data));
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/categories/`
+        );
+        // console.log("Fetched categories:", res.data);
+        const shuffled = [...res.data].sort(() => Math.random() - 0.5);
+        setCategories(shuffled);
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {
@@ -33,6 +28,14 @@ const CategorySection: React.FC = () => {
     fetchCategories();
   }, []);
 
+  
+  if (loading)
+    return (
+      <div className="min-h-[200px] flex items-center justify-center">
+        <Spinner md />
+      </div>
+    );
+
   return (
     <section className="main-max-width padding-x mx-auto my-16">
       <h2 className="my-9 text-center text-xl font-bold text-gray-800">
@@ -40,9 +43,7 @@ const CategorySection: React.FC = () => {
       </h2>
 
       <div className="flex justify-center flex-wrap gap-6 min-h-[120px] items-center">
-        {loading ? (
-          <Spinner md />
-        ) : categories.length > 0 ? (
+        {categories.length > 0 ? (
           categories.map((category) => (
             <CategoryCard key={category.id} category={category} />
           ))

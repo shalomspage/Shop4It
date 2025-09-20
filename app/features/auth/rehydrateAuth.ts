@@ -8,7 +8,7 @@ export const rehydrateAuth = createAsyncThunk(
   'auth/rehydrate',
   async (_, { dispatch }) => {
     const token = localStorage.getItem('authToken');
-    console.log('rehydrateAuth -> token from localStorage:', token);
+    // console.log('rehydrateAuth -> token from localStorage:', token);
 
     if (token) {
       try {
@@ -33,6 +33,6 @@ export const rehydrateAuth = createAsyncThunk(
     }
 
     dispatch(setInitialized());
-    console.log('rehydrateAuth -> initialized set to true');
+    // console.log('rehydrateAuth -> initialized set to true');
   }
 );

@@ -6,6 +6,7 @@ import SearchButton from "./SearchButton";
 import NavItems from "./NaveItems";
 import MobileNavbar from "./MobileNavBar";
 import MainNav from "./MainNav";  // 👈 import here
+import ClientOnly from "../ClientOnly";
 // import SearchSlide from "./SearchSlide";
 
 const NavBar = () => {
@@ -39,11 +40,12 @@ const NavBar = () => {
             />
           </div>
 
-        
+        <ClientOnly> 
           <div className="max-md:hidden flex items-center gap-8">
            
             <NavItems />
           </div>
+          </ClientOnly>
           
           {/* <div className="">
             <SearchSlide />

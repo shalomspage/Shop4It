@@ -31,22 +31,23 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId }) => {
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Fetch categories & brands
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/`)
-      .then((r) => r.json())
-      .then(setCategories)
-      .catch(console.error);
+ useEffect(() => {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/categories/`)
+    .then((r) => r.json())
+    .then(setCategories)
+    .catch(console.error);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands/`)
-      .then((r) => r.json())
-      .then(setBrands)
-      .catch(console.error);
-  }, []);
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/brands/`)
+    .then((r) => r.json())
+    .then(setBrands)
+    .catch(console.error);
+}, []);
+
 
   // Fetch product data for editing
   useEffect(() => {
     if (!productId) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/${productId}/`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/`)
       .then((res) => res.json())
       .then((data) => {
         setForm({
@@ -73,38 +74,42 @@ const ProductFormContainer: React.FC<ProductFormProps> = ({ productId }) => {
     setForm((prev) => updater(prev));
 
   const handleCancel = () => router.back();
-
+   
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
 
     try {
-      const payload = {
-        title: form.title,
-        price: parseFloat(String(form.price)),
-        description: form.description,
-        is_featured: form.isFeatured,
-        clothesType: form.clothesType,
-        ratings: parseFloat(String(form.ratings)),
-        category: form.categoryId !== "" ? form.categoryId : null,
-        brand_id: form.brandId !== "" ? form.brandId : null,
-        colors: form.colors
-          ? form.colors.split(",").map((c) => c.trim()).filter(Boolean)
-          : [],
-        sizes: form.sizes
-          ? form.sizes.split(",").map((s) => s.trim()).filter(Boolean)
-          : [],
-        imageUrl: form.imageUrl
-          ? form.imageUrl.split(",").map((u) => u.trim()).filter(Boolean)
-          : [],
-        created_at: form.createdAt,
-      };
+       const payload = {
+  title: form.title,
+  price: parseFloat(String(form.price)),
+  description: form.description,
+  is_featured: form.isFeatured,
+  clothesType: form.clothesType,
+  ratings: parseFloat(String(form.ratings)),
+  category: form.categoryId !== "" ? String(form.categoryId) : null, 
+  brand: form.brandId !== "" ? String(form.brandId) : null,  
+  colors: form.colors
+    ? form.colors.split(",").map((c) => c.trim()).filter(Boolean)
+    : [],
+  sizes: form.sizes
+    ? form.sizes.split(",").map((s) => s.trim()).filter(Boolean)
+    : [],
+  imageUrl: form.imageUrl
+    ? form.imageUrl.split(",").map((u) => u.trim()).filter(Boolean)
+    : [],
+  created_at: form.createdAt,
+};
+
+
+
+        console.log("Submitting product payload:", payload);
 
       const method = productId ? "PUT" : "POST";
       const url = productId
-        ? `${process.env.NEXT_PUBLIC_API_URL}/${productId}/`
-        : `${process.env.NEXT_PUBLIC_API_URL}`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/`
+        : `${process.env.NEXT_PUBLIC_API_URL}/products/`;
 
       const res = await fetch(url, {
         method,

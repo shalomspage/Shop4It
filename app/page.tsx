@@ -14,13 +14,15 @@ const HomePage = () => {
       {/* Featured Products (temporarily using /popular/) */}
       <ProductSection 
         title="Featured Products" 
-        endpoint="/products/popular/" 
+        endpoint="/products/popular/"
+        limit={4} 
       />
 
       {/* Popular Products */}
       <ProductSection 
         title="Popular Products" 
         endpoint="/products/popular/" 
+        limit={8}
       />
     </>
   );
